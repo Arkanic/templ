@@ -8,13 +8,23 @@ void inthand(int signum) {
 	stop = 1;
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	printf("temp logger\n");
+
+	unsigned short celsius = 1;
+	if(argc > 1) {
+		if(argv[1][0] == 'f') celsius = 0;
+	}
+
+	printf("displaying temp in %s\n", celsius ? "celsius" : "fahrenheit");
 
 	signal(SIGINT, inthand);
 
 	while(!stop) {
-		printf("%.1fC\n", gettemp());
+		float t = gettemp();
+		if(celsius == 0) t = celtofahr(t);
+
+		printf("%.1f%c\n", t, celsius ? 'C' : 'F');
 		sleep(1);
 	}
 
