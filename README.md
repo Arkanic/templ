@@ -1,2 +1,2 @@
 # templ
-temp logger, using vcgencmd
+Raspberry PI CPU temperature monitor

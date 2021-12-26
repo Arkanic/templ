@@ -1,6 +1,6 @@
-CC=cc
+CC=gcc
 CFLAGS=-O3
-OUT=templ.o gettemp.o util.o
+OUT=templ.o gettemp.o util.o pretty.o
 
 all: templ
 
@@ -8,7 +8,7 @@ all: templ
 	$(CC) $(CFLAGS) -c $<
 
 templ: $(OUT)
-	$(CC) -g -o templ $(OUT)
+	$(CC) $(CFLAGS) -g -o templ $(OUT)
 
 .PHONY: clean
 

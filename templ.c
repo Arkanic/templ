@@ -24,7 +24,11 @@ int main(int argc, char *argv[]) {
 		float t = gettemp();
 		if(celsius == 0) t = celtofahr(t);
 
-		printf("%.1f%c\n", t, celsius ? 'C' : 'F');
+		//printf("%.1f%c \n", t, celsius ? 'C' : 'F');
+		//printf("\x1b[1F");
+
+		prettyprint(t, celsius);
+
 		sleep(1);
 	}
 
