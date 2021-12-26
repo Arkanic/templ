@@ -28,7 +28,8 @@ void prettyprint(float temp, unsigned short celsius) {
 	snprintf(stemp, sizeof(stemp), "%.1f", temp);
 	char seg[8][5][6];
 
-	for(short i = 0; i < strlen(stemp); i++) {
+	short i;
+	for(i = 0; i < strlen(stemp); i++) {
 		char c = stemp[i];
 
 		int segc;
@@ -41,9 +42,10 @@ void prettyprint(float temp, unsigned short celsius) {
 
 		prints16(seg[i], segc);
 	}
+	prints16(seg[i], celsius ? DC : DF);
 
 	for(short y = 0; y < CHARH; y++) {
-		for(short x = 0; x < strlen(stemp); x++) {
+		for(short x = 0; x < strlen(stemp) + 1; x++) {
 			printf("%s ", seg[x][y]);
 		}
 

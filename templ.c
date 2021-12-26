@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 	signal(SIGINT, inthand);
 
 	while(!stop) {
-		float t = gettemp();
+		float t = cputemp(0);
 		if(celsius == 0) t = celtofahr(t);
 
 		//printf("%.1f%c \n", t, celsius ? 'C' : 'F');

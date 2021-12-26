@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-O3
-OUT=templ.o gettemp.o util.o pretty.o
+OUT=templ.o util.o pretty.o temp.o
 
 all: templ
 

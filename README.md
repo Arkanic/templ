@@ -1,2 +1,2 @@
 # templ
-Raspberry PI CPU temperature monitor
+CPU temperature monitor
