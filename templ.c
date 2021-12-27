@@ -4,9 +4,31 @@
 #include <signal.h>
 #include <string.h>
 
+#include "color.h"
 #include "templ.h"
 
 #define hasarg(arg) !strcmp(argv[j], arg)
+
+#define COLD 20.0
+#define NORMAL 40.0
+#define WARM 60.0
+#define HOT 80.0
+
+const char *colororder[] = {BLUE, GREEN, YELLOW, RED};
+
+int getcolor(float tempc) {
+	int c = 0;
+
+	if(tempc <= HOT) c = 3;
+	if(tempc <= WARM) c = 2;
+	if(tempc <= NORMAL) c = 1;
+	if(tempc <= COLD) c = 0;
+
+	if(tempc >= HOT) c = 3;
+	if(tempc <= COLD) c = 0;
+
+	return c;
+}
 
 void showhelp(void) {
 	printf(
@@ -53,10 +75,15 @@ int main(int argc, char *argv[]) {
 
 	while(!stop) {
 		float t = cputemp(0);
+
+		int color = getcolor(t);
+
 		if(celsius == 0) t = celtofahr(t);
 
 		if(pretty) {
+			printf(colororder[color]);
 			prettyprint(t, celsius);
+			printf(RESET);
 		} else {
 			printf("%.1f%c\n", t, celsius ? 'C' : 'F');
 		}

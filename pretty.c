@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 #include "alpha.h"
+#include "color.h"
 #include "templ.h"
 
 #define c(p, c) getbit(segc, p) ? c : ' '
@@ -24,12 +25,14 @@ void prints16(char result[5][6], int segc) { // char result[y][x + \0]
 }
 
 void printgraph(float data[GRAPHLEN]) {
+	printf(BLUE);
 	for(short i = 0; i < GRAPHLEN; i++) {
 		for(short j = 0; j < (int)(data[i]); j++) {
 			printf("*");
 		}
 		printf("\n");
 	}
+	printf(RESET);
 }
 
 float data[GRAPHLEN] = {0.0, 0.0, 0.0, 0.0, 0.0};
