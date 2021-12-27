@@ -3,15 +3,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "alpha.h"
+#include "templ.h"
 
 #define c(p, c) getbit(segc, p) ? c : ' '
 
-const int numbers[10] = {D0, D1, D2, D3, D4, D5, D6, D7, D8, D9};
+#define GWIDTH 30
+#define MAXTEMP 120
+#define WPT GWIDTH / MAXTEMP
 
-unsigned short getbit(int num, int position) {
-	return (num >> position) & 1;
-}
+const int numbers[10] = {D0, D1, D2, D3, D4, D5, D6, D7, D8, D9};
 
 void prints16(char result[5][6], int segc) { // char result[y][x + \0]
 	snprintf(result[0], sizeof(result[0]), " %c %c ", c(15, '-'), c(14, '-'));
@@ -21,8 +23,22 @@ void prints16(char result[5][6], int segc) { // char result[y][x + \0]
 	snprintf(result[4], sizeof(result[4]), " %c %c ", c(1, '-'), c(0, '-'));
 }
 
+void printgraph(float data[GRAPHLEN]) {
+	for(short i = 0; i < GRAPHLEN; i++) {
+		for(short j = 0; j < (int)(data[i]); j++) {
+			printf("*");
+		}
+		printf("\n");
+	}
+}
+
+float data[GRAPHLEN] = {0.0, 0.0, 0.0, 0.0, 0.0};
+
 void prettyprint(float temp, unsigned short celsius) {
 	printf("\e[1;1H\e[2J");
+
+	leftrot(data, GRAPHLEN);
+	data[GRAPHLEN - 1] = temp;
 
 	char stemp[8];
 	snprintf(stemp, sizeof(stemp), "%.1f", temp);
@@ -51,4 +67,6 @@ void prettyprint(float temp, unsigned short celsius) {
 
 		printf("\n");
 	}
+
+	printgraph(data);
 }
