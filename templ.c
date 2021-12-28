@@ -7,7 +7,7 @@
 #include "color.h"
 #include "templ.h"
 
-#define hasarg(arg) !strcmp(argv[j], arg)
+#define hasarg(arg) (!strcmp(argv[j], arg))
 
 #define COLD 20.0
 #define NORMAL 40.0
@@ -32,11 +32,11 @@ int getcolor(float tempc) {
 
 void showhelp(void) {
 	printf(
-"--celsius                Show temperature in celsius (default)\n"
-"--fahrenheit             Show temperature in fahrenheit\n"
-"--pretty                 Show pretty 16-seg numbers (default)\n"
-"--standard               Show simple text temperature\n"
-"--help                   Show this message\n"
+"--celsius,    -c         Show temperature in celsius (default)\n"
+"--fahrenheit, -f         Show temperature in fahrenheit\n"
+"--pretty,     -p         Show pretty 16-seg numbers (default)\n"
+"--standard,   -s         Show simple text temperature\n"
+"--help,       -h         Show this message\n"
 	);
 }
 
@@ -55,11 +55,11 @@ int main(int argc, char *argv[]) {
 	for(int j = 1; j < argc; j++) {
 		int more = j + 1 < argc;
 
-		if(hasarg("--celsius")) celsius = 1;
-		else if(hasarg("--fahrenheit")) celsius = 0;
-		else if(hasarg("--pretty")) pretty = 1;
-		else if(hasarg("--standard")) pretty = 0;
-		else if(hasarg("--help")) {
+		if(hasarg("--celsius") || hasarg("-c")) celsius = 1;
+		else if(hasarg("--fahrenheit") || hasarg("-f")) celsius = 0;
+		else if(hasarg("--pretty") || hasarg("-p")) pretty = 1;
+		else if(hasarg("--standard")|| hasarg("-s")) pretty = 0;
+		else if(hasarg("--help") || hasarg("-h")) {
 			showhelp();
 			exit(0);
 		} else {
