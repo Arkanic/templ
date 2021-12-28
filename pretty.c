@@ -37,8 +37,10 @@ void printgraph(float data[GRAPHLEN]) {
 
 float data[GRAPHLEN] = {0.0, 0.0, 0.0, 0.0, 0.0};
 
-void prettyprint(float temp, unsigned short celsius) {
+void prettyprint(struct Tempdata t) {
 	printf("\e[1;1H\e[2J");
+
+	float temp = t.celsius ? t.cel : t.fahr;
 
 	leftrot(data, GRAPHLEN);
 	data[GRAPHLEN - 1] = temp;
@@ -61,7 +63,7 @@ void prettyprint(float temp, unsigned short celsius) {
 
 		prints16(seg[i], segc);
 	}
-	prints16(seg[i], celsius ? DC : DF);
+	prints16(seg[i], t.celsius ? DC : DF);
 
 	for(short y = 0; y < CHARH; y++) {
 		for(short x = 0; x < strlen(stemp) + 1; x++) {

@@ -74,18 +74,19 @@ int main(int argc, char *argv[]) {
 	signal(SIGINT, inthand);
 
 	while(!stop) {
-		float t = cputemp(0);
+		struct Tempdata t;
+		t.cel = cputemp(0);
+		t.fahr = celtofahr(t.cel);
+		t.celsius = celsius;
 
-		int color = getcolor(t);
-
-		if(celsius == 0) t = celtofahr(t);
+		int color = getcolor(t.cel);
 
 		if(pretty) {
 			printf(colororder[color]);
-			prettyprint(t, celsius);
+			prettyprint(t);
 			printf(RESET);
 		} else {
-			printf("%.1f%c\n", t, celsius ? 'C' : 'F');
+			printf("%.1f%c\n", t.celsius ? t.cel : t.fahr, t.celsius ? 'C' : 'F');
 		}
 
 		sleep(1);

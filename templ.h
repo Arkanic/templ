@@ -1,12 +1,18 @@
 // generic
 #define GRAPHLEN 5
 
+struct Tempdata {
+	float cel;
+	float fahr;
+	unsigned short celsius;
+};
+
 // temp.c
 float cputemp(int core);
 
 // pretty.c
 unsigned short getbit(int num, int position);
-void prettyprint(float temp, unsigned short celsius);
+void prettyprint(struct Tempdata t);
 
 // util.c
 float celtofahr(float celsius);
