@@ -43,7 +43,7 @@ void prettyprint(struct Tempdata t) {
 	float temp = t.celsius ? t.cel : t.fahr;
 
 	leftrot(data, GRAPHLEN);
-	data[GRAPHLEN - 1] = temp;
+	data[GRAPHLEN - 1] = t.cel;
 
 	char stemp[8];
 	snprintf(stemp, sizeof(stemp), "%.1f", temp);
