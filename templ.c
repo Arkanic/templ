@@ -30,6 +30,11 @@ int getcolor(float tempc) {
 	return c;
 }
 
+struct Options {
+	unsigned short celsius;
+	unsigned short pretty;
+};
+
 void showhelp(void) {
 	printf(
 "--celsius,    -c         Show temperature in celsius (default)\n"
@@ -49,16 +54,17 @@ void inthand(int signum) {
 int main(int argc, char *argv[]) {
 	printf("temp logger\n");
 
-	unsigned short celsius = 1;
-	unsigned short pretty = 1;
+	struct Options opts;
+	opts.celsius = 1;
+	opts.pretty = 1;
 
 	for(int j = 1; j < argc; j++) {
 		int more = j + 1 < argc;
 
-		if(hasarg("--celsius") || hasarg("-c")) celsius = 1;
-		else if(hasarg("--fahrenheit") || hasarg("-f")) celsius = 0;
-		else if(hasarg("--pretty") || hasarg("-p")) pretty = 1;
-		else if(hasarg("--standard")|| hasarg("-s")) pretty = 0;
+		if(hasarg("--celsius") || hasarg("-c")) opts.celsius = 1;
+		else if(hasarg("--fahrenheit") || hasarg("-f")) opts.celsius = 0;
+		else if(hasarg("--pretty") || hasarg("-p")) opts.pretty = 1;
+		else if(hasarg("--standard")|| hasarg("-s")) opts.pretty = 0;
 		else if(hasarg("--help") || hasarg("-h")) {
 			showhelp();
 			exit(0);
@@ -69,7 +75,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	printf("displaying temp in %s\n", celsius ? "celsius" : "fahrenheit");
+	printf("displaying temp in %s\n", opts.celsius ? "celsius" : "fahrenheit");
 
 	signal(SIGINT, inthand);
 
@@ -77,11 +83,11 @@ int main(int argc, char *argv[]) {
 		struct Tempdata t;
 		t.cel = cputemp(0);
 		t.fahr = celtofahr(t.cel);
-		t.celsius = celsius;
+		t.celsius = opts.celsius;
 
 		int color = getcolor(t.cel);
 
-		if(pretty) {
+		if(opts.pretty) {
 			printf(colororder[color]);
 			prettyprint(t);
 			printf(RESET);
